@@ -100,7 +100,7 @@ const defaultIsRefreshCall = (action, refreshAction) => {
   return action["Call API"].endpoint === refreshAction["Call API"].endpoint;
 };
 
-export const createFSAConverter = (successType, failureType) => {
+export const createFSAConverter = (successType, failureType, meta) => {
   return response => {
     if (!response.ok) {
       return {
@@ -108,7 +108,8 @@ export const createFSAConverter = (successType, failureType) => {
         payload: {
           status: response.status
         },
-        type: failureType
+        type: failureType,
+        meta
       }
     }
 
@@ -117,7 +118,8 @@ export const createFSAConverter = (successType, failureType) => {
 
     const createSuccessType = payload => ({
       payload,
-      type: successType
+      type: successType,
+      meta
     })
 
     if (
